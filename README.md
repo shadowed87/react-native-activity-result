@@ -4,11 +4,11 @@ A simple React Native native module for invoking `Activity.startActivityForResul
 
 ## Getting started
 
-`$ npm install react-native-activity-result --save`
+`$ npm install react-native-activity-result-fork --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-activity-result`
+`$ react-native link react-native-activity-result-fork`
 
 ### Manual installation
 
