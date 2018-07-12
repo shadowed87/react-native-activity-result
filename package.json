@@ -1,6 +1,6 @@
 {
   "name": "react-native-activity-result-fork",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0",
   "description": "React Native modules for starting and finishing activities on Android.",
   "main": "index.js",
   "repository": {
