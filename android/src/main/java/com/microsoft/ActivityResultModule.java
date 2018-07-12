@@ -66,6 +66,33 @@ public class ActivityResultModule extends ReactContextBaseJavaModule implements 
       intent.putExtras(Arguments.toBundle(data));
       activity.startActivity(intent);
   }
+  
+   @ReactMethod
+   public void startActivityWithPackageName(String packageName, String activityName, String data) {
+       ComponentName component = new ComponentName(packageName, activityName);
+       Activity activity = getReactApplicationContext().getCurrentActivity();
+       Intent intent = new Intent(Intent.ACTION_MAIN);
+       intent.addCategory(Intent.CATEGORY_LAUNCHER);
+       intent.setComponent(component);
+       intent.putExtra("data", data);
+       Log.d("data", data);
+       intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |  Intent.FLAG_ACTIVITY_NEW_TASK);
+       activity.startActivity(intent);
+   }
+
+   @ReactMethod
+   public void isIntentAvailable(String packageName, Promise promise) {
+       PackageManager pm = getReactApplicationContext().getPackageManager();
+       try {
+           pm.getPackageInfo(packageName, 0);
+           WritableMap map = new WritableNativeMap();
+           map.putString("result", "true");
+           promise.resolve(map);
+       } catch (PackageManager.NameNotFoundException e) {
+           promise.resolve(null);
+           return;
+       }
+   } 
 
   @ReactMethod
   public void startActivityForResult(int requestCode, String action, ReadableMap data, Promise promise) {
