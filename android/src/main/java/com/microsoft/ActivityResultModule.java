@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.util.SparseArray;
+import android.content.pm.PackageManager;
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
@@ -75,7 +76,6 @@ public class ActivityResultModule extends ReactContextBaseJavaModule implements 
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setComponent(component);
         intent.putExtra("data", data);
-        Log.d("data", data);
         intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK |  Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }
