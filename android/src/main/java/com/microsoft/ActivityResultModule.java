@@ -125,7 +125,16 @@ public class ActivityResultModule extends ReactContextBaseJavaModule implements 
         Intent intent = new Intent(action);
         intent.putExtras(Arguments.toBundle(map));
         activity.setResult(result, intent);
-        activity.finish();
+
+        // this way clear instance in "recent app" after calling this function
+        // https://github.com/noitq/react-native-exit-app/blob/master/android/src/main/java/com/github/wumke/RNExitApp/RNExitAppModule.java#L40
+        if(android.os.Build.VERSION.SDK_INT >= 21) {
+            activity.finishAndRemoveTask();
+        } else {
+            activity.finish();
+        }
+        // this way remain instance in "recent app" after calling this function
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Override
