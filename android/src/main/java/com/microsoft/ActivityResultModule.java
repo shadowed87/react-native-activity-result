@@ -105,12 +105,9 @@ public class ActivityResultModule extends ReactContextBaseJavaModule implements 
         PackageManager pm = getReactApplicationContext().getPackageManager();
         try {
             pm.getPackageInfo(packageName, 0);
-            WritableMap map = new WritableNativeMap();
-            map.putString("result", "true");
-            promise.resolve(map);
+            promise.resolve(true);
         } catch (PackageManager.NameNotFoundException e) {
-            promise.resolve(null);
-            return;
+            promise.resolve(false);
         }
     } 
 
