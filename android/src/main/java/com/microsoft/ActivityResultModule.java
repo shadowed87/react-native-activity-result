@@ -61,6 +61,26 @@ public class ActivityResultModule extends ReactContextBaseJavaModule implements 
     }
 
     @ReactMethod
+    public void openApp(String packageName, String activityName, ReadableMap data, Promise promise) {
+        ReactApplicationContext context = getReactApplicationContext();
+        PackageManager manager = context.getPackageManager();
+        try {
+            Intent intent = manager.getLaunchIntentForPackage(packageName);
+            if (intent == null) {
+                promise.resolve(false);
+            }
+            intent.setComponent(new ComponentName(packageName, activityName));
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.putExtras(Arguments.toBundle(data));
+            context.startActivity(intent);
+            promise.resolve(true);
+        } catch (android.content.ActivityNotFoundException e) {
+            promise.resolve(false);
+        }
+    }
+
+
+    @ReactMethod
     public void startActivity(String action, ReadableMap data) {
         Activity activity = getReactApplicationContext().getCurrentActivity();
         Intent intent = new Intent(action);
